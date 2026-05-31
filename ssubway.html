@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SSUbway 서비스</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">지하철 경로 · 혼잡도 분석</p>
+        <h1>SSUbway 서비스</h1>
+        <p>1호선부터 9호선까지 출발지·도착지를 선택하면 경로, 환승, 예상 소요 시간, 혼잡도를 보여줍니다.</p>
+      </div>
+      <div class="hero-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="테마 전환">🌙</button>
+        <button id="loadApiBtn">API 데이터 불러오기</button>
+      </div>
+    </header>
+
+    <div id="toastBar" class="toast hidden"></div>
+
+    <section class="grid">
+      <article class="card controls">
+        <h2>1. 경로 선택</h2>
+        <div class="station-grid">
+          <div><label>출발 호선</label><select id="startLineSelect"></select></div>
+          <div><label>도착 호선</label><select id="endLineSelect"></select></div>
+        </div>
+        <div class="station-grid">
+          <div><label>출발지</label><select id="startSelect"></select></div>
+          <div><label>도착지</label><select id="endSelect"></select></div>
+        </div>
+        <label>출발 시간 선택</label>
+        <div class="quick-row">
+          <button id="morningBtn" class="quick-btn">🌅 출근시간</button>
+          <button id="eveningBtn" class="quick-btn">🌆 퇴근시간</button>
+        </div>
+        <p class="sub-label">① 시간을 먼저 선택하세요</p>
+        <div id="hourButtons" class="hour-buttons"></div>
+        <p class="sub-label">② 분을 선택하세요</p>
+        <div id="minuteButtons" class="minute-buttons"></div>
+        <div class="selected-time-box"><span>선택 완료</span><strong id="selectedTimeText">08:00</strong></div>
+        <div id="withinHourTip" class="notice">선택한 시간대에서 가장 덜 붐비는 분을 추천합니다.</div>
+      </article>
+      <article class="card result">
+        <h2>2. 혼잡도 결과</h2>
+        <div id="statusBadge" class="badge">분석 대기</div>
+        <div class="big-percent"><span id="selectedPercent">--</span>%</div>
+        <p id="resultText">출발지, 도착지, 시간을 선택하면 분석 결과가 표시됩니다.</p>
+        <div class="recommend"><span>전체 추천 출발 시간</span><strong id="recommendTime">--</strong></div>
+      </article>
+    </section>
+
+    <section class="route-panel">
+      <article class="card">
+        <h2>3. 예상 경로</h2>
+        <div class="route-summary">
+          <div><span>정차역 수</span><strong id="stopCount">--</strong></div>
+          <div><span>예상 소요 시간</span><strong id="travelTime">--</strong></div>
+          <div><span>환승 정보</span><strong id="transferText">--</strong></div>
+        </div>
+        <div id="routePath" class="route-path"></div>
+      </article>
+    </section>
+
+    <section class="card chart-card">
+      <div class="chart-header">
+        <div><h2>4. 시간대별 혼잡도 그래프</h2><p id="dataSource">데이터 출처: 예시 데이터</p></div>
+        <button id="editBtn" class="secondary">직접 데이터 수정</button>
+      </div>
+      <div id="chart" class="chart"></div>
+    </section>
+
+    <section id="editor" class="card editor hidden">
+      <h2>5. 직접 혼잡도 입력</h2>
+      <p>선택한 경로의 시간대별 혼잡도를 직접 입력하면 그래프가 즉시 바뀝니다.</p>
+      <div id="inputRows" class="input-rows"></div>
+      <button id="applyBtn">입력값 적용</button>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
